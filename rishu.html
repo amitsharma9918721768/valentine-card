@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Baby Rishu's Moments 🍼</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom right, #e0f7fa, #fff9c4);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      overflow-x: hidden;
+    }
+
+    .start-screen {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .start-screen h1 {
+      font-size: 2.5em;
+      color: #ff6f61;
+      margin-bottom: 20px;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #ff8a65, 0 0 20px #ffccbc;
+      }
+      to {
+        text-shadow: 0 0 20px #ff7043, 0 0 30px #ffe0b2;
+      }
+    }
+
+    .start-btn button {
+      padding: 15px 40px;
+      font-size: 1.3em;
+      background: linear-gradient(to right, #ff8a65, #ff5252);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .slideshow-container {
+      max-width: 700px;
+      margin: auto;
+      padding-top: 80px;
+      display: none;
+    }
+
+    .slide {
+      display: none;
+      padding: 30px;
+      background-color: #fefae0;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: fade 1s ease-in-out;
+    }
+
+    .slide img, .slide video {
+      width: 85%;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .text {
+      font-size: 1.5em;
+      margin-top: 20px;
+      color: #ff6f61;
+    }
+
+    @keyframes fade {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    .emoji {
+      font-size: 2em;
+      animation: float 3s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px;
+      color: #888;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Start Screen -->
+  <div class="start-screen" id="startScreen">
+    <h1>Welcome to Rishu's Magical Moments ✨</h1>
+    <div class="start-btn">
+      <button onclick="startSlideshow()">🌟 Let's Begin!</button>
+    </div>
+  </div>
+
+  <!-- Slideshow -->
+  <div class="slideshow-container">
+
+    <div class="slide">
+      <img src="DJPJ4580.JPG" alt="Rishu Baby">
+      <p class="text">Meet Rishu — our cutest superstar 🌟 <span class="emoji">🧸</span></p>
+    </div>
+
+    <div class="slide">
+      <video src="SSQJ0627.MP4" id="vid1" controls></video>
+      <p class="text">That giggle can melt anyone’s heart 💛 <span class="emoji">😄💞</span></p>
+    </div>
+
+    <div class="slide">
+      <img src="DTSO8265.JPG" alt="Playtime">
+      <p class="text">Playtime is Rishu-time! 🚂 <span class="emoji">🪁🚀</span></p>
+    </div>
+
+    <div class="slide">
+      <video src="TPLM1631.MP4" id="vid2" controls></video>
+      <p class="text">Sweet dreams, little champ 💤 <span class="emoji">🌙🍼</span></p>
+    </div>
+
+  </div>
+
+  <div class="footer">With love for Rishu from Chachu 💙</div>
+
+  <script>
+    let slideIndex = 0;
+    let slides, videos;
+
+    function startSlideshow() {
+      document.getElementById('startScreen').style.display = 'none';
+      document.querySelector('.slideshow-container').style.display = 'block';
+
+      slides = document.getElementsByClassName("slide");
+      videos = document.querySelectorAll("video");
+
+      // Ensure all videos play with sound
+      videos.forEach(video => {
+        video.muted = false;
+        video.autoplay = false;
+      });
+
+      showSlides();
+    }
+
+    function showSlides() {
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+        if (videos[i]) {
+          videos[i].pause();
+          videos[i].currentTime = 0;
+        }
+      }
+
+      slideIndex++;
+      if (slideIndex > slides.length) slideIndex = 1;
+
+      const currentSlide = slides[slideIndex - 1];
+      currentSlide.style.display = "block";
+
+      const video = currentSlide.querySelector("video");
+      if (video) {
+        video.play();
+        video.onended = function () {
+          showSlides();
+        };
+      } else {
+        setTimeout(showSlides, 3500);
+      }
+    }
+  </script>
+
+</body>
+</html>
